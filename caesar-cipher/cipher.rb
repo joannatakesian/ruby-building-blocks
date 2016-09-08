@@ -1,13 +1,15 @@
 def cipher(string, shift)
-    alphabet = Array('a'..'z')
-    encrypter = Hash[alphabet.zip(alphabet.rotate(shift))]
-    string.chars.map { |a| encrypter.fetch(a, " ") }
+    encrypted_string = []
+    alphabet = ('a'..'z').to_a.join
+    shifted = alphabet.chars.rotate(shift).join
+    
+    string.downcase.split('').each do |letter|
+        alphabet.split('').each_with_index do |char, index|
+            if char == letter
+                encrypted_string << shifted[index]
+            end
+        end
+    end
+    
+    puts encrypted_string.join
 end
-
-puts "Enter a phrase to encrypt:"
-string = gets.chomp.to_s
-
-puts "Enter a key:"
-shift = gets.chomp.to_i
-
-puts cipher(string, shift).join
